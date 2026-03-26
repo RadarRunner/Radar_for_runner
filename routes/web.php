@@ -19,9 +19,10 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Récupérer les images d'une date et d'un type
+    // API images (lecture)
     Route::get('/api/images/{date}/{type}', [ImageController::class, 'getByDateThenType']);
 
-    // Route pour afficher une image individuelle
-    Route::get('/images/{date}/{filename}', [ImageController::class, 'show'])->name('images.show');
+    // API images (upload)
+    Route::post('/api/images', [ImageController::class, 'store']);
+
 });
