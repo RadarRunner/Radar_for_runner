@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* Styles personnalisés */
+.validator {
+  display: flex;
+  align-items: center;
+  border: 2px solid #979ba1; /* gris contour formulaire */
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  gap: 0.5rem;
+}
+
+.validator input {
+  border: none;
+  outline: none;
+  flex: 1;
+}
+
+.validator-hint {
+  color: #ef4444; /* rouge erreur formulaire */
+  font-size: 0.875rem; 
+  margin-top: 0.25rem;
+}
+
+
+
+/*
+  lien pour les template : https://daisyui.com/ 
+ */

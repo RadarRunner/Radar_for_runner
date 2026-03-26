@@ -1,0 +1,27 @@
+<?php
+
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ImageController;
+use Illuminate\Support\Facades\Route;
+
+// Page d'accueil
+Route::get('/', function () {
+    return view('welcome');
+})->name('welcome');
+
+// Connexion
+Route::post('/connect', [AuthController::class, 'login'])->name('connect');
+
+// Routes protégées par authentification
+Route::middleware(['auth'])->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Récupérer les images d'une date et d'un type
+    Route::get('/api/images/{date}/{type}', [ImageController::class, 'getByDateThenType']);
+
+    // Route pour afficher une image individuelle
+    Route::get('/images/{date}/{filename}', [ImageController::class, 'show'])->name('images.show');
+});
