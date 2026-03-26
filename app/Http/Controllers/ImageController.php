@@ -11,13 +11,13 @@ class ImageController extends Controller
     {
         $path = "images/$date/$type";
 
-        $files = Storage::disk('s3')->files($path);
+        $files = Storage::disk('r2')->files($path);
 
         $images = [];
 
         foreach ($files as $file) {
             $images[] = [
-                'url' => Storage::disk('s3')->url($file),
+                'url' => Storage::disk('r2')->url($file),
                 'title' => pathinfo($file, PATHINFO_FILENAME),
             ];
         }
@@ -35,12 +35,12 @@ class ImageController extends Controller
 
         $path = $request->file('image')->store(
             'images/' . $request->date . '/' . $request->course_type,
-            's3'
+            'r2'
         );
 
         return response()->json([
             'message' => 'Image ajoutée',
-            'url' => Storage::disk('s3')->url($path),
+            'url' => Storage::disk('r2')->url($path),
             'title' => pathinfo($path, PATHINFO_FILENAME),
         ]);
     }
