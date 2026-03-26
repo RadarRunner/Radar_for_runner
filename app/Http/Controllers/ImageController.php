@@ -7,18 +7,17 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
-    // Retourne toutes les images pour une date et un type
     public function getByDateThenType($date, $type)
     {
         $path = "images/$date/$type";
 
-        $files = Storage::disk('s3')->files($path);
+        $files = Storage::disk('radar_for_runner_main')->files($path);
 
         $images = [];
 
         foreach ($files as $file) {
             $images[] = [
-                'url' => Storage::disk('s3')->url($file),
+                'url' => Storage::disk('radar_for_runner_main')->url($file),
                 'title' => pathinfo($file, PATHINFO_FILENAME),
             ];
         }
@@ -26,7 +25,6 @@ class ImageController extends Controller
         return response()->json($images);
     }
 
-    // Upload une image dans le bucket
     public function store(Request $request)
     {
         $request->validate([
@@ -37,12 +35,12 @@ class ImageController extends Controller
 
         $path = $request->file('image')->store(
             'images/' . $request->date . '/' . $request->course_type,
-            's3'
+            'radar_for_runner_main'
         );
 
         return response()->json([
             'message' => 'Image ajoutée',
-            'url' => Storage::disk('s3')->url($path),
+            'url' => Storage::disk('radar_for_runner_main')->url($path),
             'title' => pathinfo($path, PATHINFO_FILENAME),
         ]);
     }
