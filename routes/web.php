@@ -13,18 +13,8 @@ Route::get('/', function () {
 // Connexion
 Route::post('/connect', [AuthController::class, 'login'])->name('connect');
 
-Route::get('/debug-bucket', function () {
-    return response()->json([
-        'env_AWS_BUCKET' => env('AWS_BUCKET'),
-        'config_bucket' => config('filesystems.disks.s3.bucket'),
-        'env_AWS_ENDPOINT' => env('AWS_ENDPOINT'),
-        'config_endpoint' => config('filesystems.disks.s3.endpoint'),
-        'env_AWS_URL' => env('AWS_URL'),
-        'config_url' => config('filesystems.disks.s3.url'),
-        'env_AWS_ACCESS_KEY_ID' => env('AWS_ACCESS_KEY_ID') ? 'set' : 'missing',
-        'env_AWS_SECRET_ACCESS_KEY' => env('AWS_SECRET_ACCESS_KEY') ? 'set' : 'missing',
-        'default_disk' => config('filesystems.default'),
-    ]);
+Route::get('/debug-disks', function () {
+    return response()->json(array_keys(config('filesystems.disks')));
 });
 
 // Routes protégées par authentification
