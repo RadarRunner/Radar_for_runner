@@ -4,6 +4,16 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/clear-laravel-cache', function () {
+    Artisan::call('optimize:clear');
+
+    return response()->json([
+        'message' => 'Cache cleared',
+        'output' => Artisan::output(),
+    ]);
+});
 
 // Page d'accueil
 Route::get('/', function () {
