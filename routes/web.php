@@ -13,6 +13,15 @@ Route::get('/', function () {
 // Connexion
 Route::post('/connect', [AuthController::class, 'login'])->name('connect');
 
+Route::get('/debug-bucket', function () {
+    return response()->json([
+        'AWS_BUCKET' => env('AWS_BUCKET'),
+        'AWS_ENDPOINT' => env('AWS_ENDPOINT'),
+        'AWS_URL' => env('AWS_URL'),
+        'FILESYSTEM_DISK' => env('FILESYSTEM_DISK'),
+    ]);
+});
+
 // Routes protégées par authentification
 Route::middleware(['auth'])->group(function () {
 
